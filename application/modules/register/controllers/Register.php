@@ -29,7 +29,7 @@ class Register extends MY_Controller {
 		$cpassword = $this->input->post('cpassword');
 		$nik = $this->input->post('nik');
 		$alamat = $this->input->post('alamat');
-		$jk = $this->input->post('jk');
+		$jk = $this->input->post('gender');
 		$nohp = $this->input->post('nohp');
 		$now = date('Y-m-d H:i:s');
 
@@ -42,15 +42,16 @@ class Register extends MY_Controller {
 			$res = $this->Crud->InsertData('buyers', array(
 				'name'			=> $nama,
 				'nik'			=> $nik,
-				'address'		=> $tarif,
+				'address'		=> $alamat,
 				'gender'		=> $jk,
 				'phone'			=> $nohp,
 				'created_at'	=> $now,
 				'updated_at'	=> $now,
 			));
 			if ($res > 0) {
-				$this->session->set_flashdata('VTarif', "<div class='alert alert-success'>Register Berhasil!</div>");
-				header('location:'.base_url().'Register/index');
+				echo "Registrasi Berhasil!";
+				// $this->session->set_flashdata('VTarif', "<div class='alert alert-success'>Register Berhasil!</div>");
+				// header('location:'.base_url().'Register/index');
 			} else {
 				show_404();
 			}

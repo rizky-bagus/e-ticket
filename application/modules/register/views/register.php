@@ -1,93 +1,195 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
-
-	<style type="text/css">
-
-	::selection { background-color: #E13300; color: white; }
-	::-moz-selection { background-color: #E13300; color: white; }
-
-	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
-	}
-
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
-	}
-
-	h1 {
-		color: #444;
-		background-color: transparent;
-		border-bottom: 1px solid #D0D0D0;
-		font-size: 19px;
-		font-weight: normal;
-		margin: 0 0 14px 0;
-		padding: 14px 15px 10px 15px;
-	}
-
-	code {
-		font-family: Consolas, Monaco, Courier New, Courier, monospace;
-		font-size: 12px;
-		background-color: #f9f9f9;
-		border: 1px solid #D0D0D0;
-		color: #002166;
-		display: block;
-		margin: 14px 0 14px 0;
-		padding: 12px 10px 12px 10px;
-	}
-
-	#body {
-		margin: 0 15px 0 15px;
-	}
-
-	p.footer {
-		text-align: right;
-		font-size: 11px;
-		border-top: 1px solid #D0D0D0;
-		line-height: 32px;
-		padding: 0 10px 0 10px;
-		margin: 20px 0 0 0;
-	}
-
-	#container {
-		margin: 10px;
-		border: 1px solid #D0D0D0;
-		box-shadow: 0 0 8px #D0D0D0;
-	}
-	</style>
+	<title> Form Validasi </title>
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/css/StyleRegistrasi.css">
 </head>
-<body>
 
-<div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
+<div class="container">
+	<form class="form" action="<?php echo base_url()."Register/DoRegister"; ?>" method="POST">
+	<h1>Registrasi</h1>
+		<div class="form-control">
+			<label for="Nama">Nama</label>
+			<input type="text" placeholder="Masukkan Nama..." id="Nama" name="nama" />
+			<i class="fas fa-check-circle"></i>
+			<i class="fas fa-exclamation-circle"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<label for="Nama">NIK</label>
+			<input type="text" placeholder="Masukkan NIK" id="Nik" name="nik" />
+			<i class="fas fa-check-circle"></i>
+			<i class="fas fa-exclamation-circle"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<label for="Nama">No. Hp</label>
+			<input type="text" placeholder="Telepon" id="Hp" name="nohp"  />
+			<i class="fas fa-check-circle"></i>
+			<i class="fas fa-exclamation-circle"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<label for="Nama">Gender:</label> <br/>
+			<input type="radio" name="gender" value="male" /> Male    
+			<input type="radio" name="gender" value="female" /> Female
+			<i class="fas fa-check-circle"></i>
+			<i class="fas fa-exclamation-circle"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<label for="Nama">Alamat</label>
+			<input type="text" placeholder="Masukkan Alamat" id="Alamat" name="alamat" />
+			<i class="fas fa-check-circle"></i>
+			<i class="fas fa-exclamation-circle"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<label for="Nama">Email</label>
+			<input type="email" placeholder="a@gmail.com" id="email" name="email" />
+			<i class="fas fa-check-circle"></i>
+			<i class="fas fa-exclamation-circle"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<label for="Nama">Password</label>
+			<input type="password" placeholder="Password" id="password" name="password"/>
+			<i class="fas fa-check-circle"></i>
+			<i class="fas fa-exclamation-circle"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<label for="Nama">Konfirmasi</label>
+			<input type="password" placeholder="Ketik Ulang password" id="password2" name="cpassword"/>
+			<i class="fas fa-check-circle"></i>
+			<i class="fas fa-exclamation-circle"></i>
+			<small>Error message</small>
+		</div>
+		<button type="button" id="btnSubmit">SUBMIT</button>
+		<button style="display: none;" type="submit" id="btnSubmitHidden"></button>
+	</form>
+<script>
+const form = document.getElementById("form");
+const Nama = document.getElementById("Nama");
+const Nik = document.getElementById("Nik");
+const Hp = document.getElementById("Hp");
+const Alamat = document.getElementById("Alamat");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const password2 = document.getElementById("password2");
 
-	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+document.getElementById("btnSubmit").addEventListener("click", submitRegister);
 
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/modules/welcome/views/welcome_message.php</code>
+function submitRegister() {
+	var valid = checkInputs();
+	if (valid){
+		document.getElementById('btnSubmitHidden').click();
+	}
+}
 
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/modules/welcome/controllers/Welcome.php</code>
+form.addEventListener("submit", (e) => {
+	e.preventDefault();
 
-        <p>The base url is:</p>
-        <code><?php echo base_url(); ?></code>
+	var valid = checkInputs();
+	if (valid){
+		document.getElementById('btnSubmit').click();
+	}
+});
 
+function checkInputs() {
+	// trim to remove the whitespaces
+	const NamaValue = Nama.value.trim();
+    const NikValue = Nik.value.trim();
+	const emailValue = email.value.trim();
+	const HpValue = Hp.value.trim();
+    const AlamatValue = Alamat.value.trim();
+	const passwordValue = password.value.trim();
+	const password2Value = password2.value.trim();
 
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
-	</div>
+	if (NamaValue === "") {
+		setErrorFor(Nama, "Nama tidak boleh kosong!");
+		return false;
+	} else {
+		setSuccessFor(Nama);
+	}
 
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+  if (NikValue === "") {
+		setErrorFor(Nik, "Nik tidak boleh kosong!");
+		return false;
+	} else {
+		setSuccessFor(Nik);
+	}
+
+  if (HpValue === "") {
+		setErrorFor(Hp, "No. Hp tidak boleh kosong!");
+		return false;
+	}else if (!isHp(HpValue)) {
+		setErrorFor(Hp, "No Hp tidak Valid! harus berupa Angka 0-9");
+		return false;
+	}else {
+		setSuccessFor(Hp);
+	}
+
+  if (AlamatValue === "") {
+		setErrorFor(Alamat, "Alamat tidak boleh kosong!");
+		return false;
+	} else {
+		setSuccessFor(Alamat);
+	}
+
+	if (emailValue === "") {
+		setErrorFor(email, "Email tidak boleh kosong");
+		return false;
+	} else if (!isEmail(emailValue)) {
+		setErrorFor(email, "Email tidak Valid!");
+		return false;
+	} else {
+		setSuccessFor(email);
+	}
+
+	if (passwordValue === "") {
+		setErrorFor(password, "Password tidak boleh kosong");
+		return false;
+	} else {
+		setSuccessFor(password);
+	}
+
+	if (password2Value === "") {
+		setErrorFor(password2, "Password tidak boleh kosong");
+		return false;
+	} else if (passwordValue !== password2Value) {
+		setErrorFor(password2, "Passwords tidak sesuai!");
+		return false;
+	} else {
+		setSuccessFor(password2);
+	}
+	return true;
+}
+
+function setErrorFor(input, message) {
+	const formControl = input.parentElement;
+	const small = formControl.querySelector("small");
+	formControl.className = "form-control error";
+	small.innerText = message;
+}
+
+function setSuccessFor(input) {
+	const formControl = input.parentElement;
+	formControl.className = "form-control success";
+}
+
+function isHp(Hp) {
+	return /[0-9]/.test(
+		Hp
+	);	
+}
+
+function isEmail(email) {
+	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+		email
+	);	
+}
+</script>
 </div>
 
-</body>
-</html>
+
