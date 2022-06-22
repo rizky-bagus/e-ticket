@@ -26,6 +26,7 @@ class Landing extends MY_Controller {
     public function __construct()
     {
         // Load the constructer from MY_Controller
+		$this->load->model('GetData');
         parent::__construct();
     }
 
