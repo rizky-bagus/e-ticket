@@ -26,6 +26,7 @@ class Login extends MY_Controller {
     public function __construct()
     {
         // Load the constructer from MY_Controller
+		$this->load->model('GetData');
         parent::__construct();
     }
 
@@ -38,7 +39,13 @@ class Login extends MY_Controller {
      */
 	public function index()
 	{
-        //
-		$this->load->view('login');
+        $this->load->view('login');
+	}
+
+	public function actionLogin()
+	{
+        $email = $this->input->post('username');
+		$password = $this->input->post('password');
+		$auth = $this->GetData->GetAuth("where email = '" . $email . "'");
 	}
 }

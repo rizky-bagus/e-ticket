@@ -38,7 +38,13 @@ class Landing extends MY_Controller {
      */
 	public function index()
 	{
-        //
-		$this->load->view('index');
+		$hotels = $this->GetData->GetHotels("where active = '1'");
+        $this->load->view('index',compact('hotels'));
+	}
+
+	public function getDataHotel()
+	{
+		// $hotels = $this->GetData->GetHotels("where active = '1'");
+        // $this->load->view('index');
 	}
 }
