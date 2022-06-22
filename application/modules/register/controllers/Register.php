@@ -36,22 +36,34 @@ class Register extends MY_Controller {
 		//Cek Multiple Nik
 		$buyers = $this->GetData->GetBuyer("where nik = '" . $nik . "'");
 		if ($buyers->num_rows() > 0) {
-			$this->session->set_flashdata('VTarif', "<div class='alert alert-danger'>NIK Telah digunakan!</div>");
-			header('location:'.base_url().'Register/index');
+			echo "NIK Telah digunakan, Registrasi gagal! <a href='".base_url()."Register/index'>Ok</a>";
 		} else {
-			$res = $this->Crud->InsertData('buyers', array(
-				'name'			=> $nama,
-				'nik'			=> $nik,
-				'address'		=> $alamat,
-				'gender'		=> $jk,
-				'phone'			=> $nohp,
+			$getRoleBuyer = $this->GetData->GetRoles("where name = 'buyer'")->row_array();
+			$insertAuth = $this->Crud->InsertData('auths', array(
+				'email' 		=> $email,
+				'password' 		=> md5($password),
+				'status' 		=> "Active",
+				'role_id' 		=> $getRoleBuyer['id'],
 				'created_at'	=> $now,
-				'updated_at'	=> $now,
+				'updated_at'	=> $now
 			));
-			if ($res > 0) {
-				echo "Registrasi Berhasil!";
-				// $this->session->set_flashdata('VTarif', "<div class='alert alert-success'>Register Berhasil!</div>");
-				// header('location:'.base_url().'Register/index');
+			if ($insertAuth > 0) {
+				$getLastBuyer = $this->GetData->GetAuth("order by id desc")->row_array();
+				$insertBuyer = $this->Crud->InsertData('buyers', array(
+					'auth_id'		=> $getLastBuyer['id'],
+					'name'			=> $nama,
+					'nik'			=> $nik,
+					'address'		=> $alamat,
+					'gender'		=> $jk,
+					'phone'			=> $nohp,
+					'created_at'	=> $now,
+					'updated_at'	=> $now
+				));
+				if ($insertBuyer > 0) {
+					echo "Registrasi Berhasil! <a href='".base_url()."Login/index'>Ok</a>";
+				} else {
+					show_404();
+				}
 			} else {
 				show_404();
 			}

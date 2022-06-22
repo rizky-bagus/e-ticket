@@ -24,7 +24,7 @@
       </div>
     </div>
     <button>Submit</button>
-    <p class="sign-up">Belum punya akun? <a href="Registrasi.html">Buat Sekarang</a></p></div>
+    <p class="sign-up">Belum punya akun? <a href="<?php echo base_url() ?>Register/index">Buat Sekarang</a></p></div>
   </form>
   </body>
 </html>
