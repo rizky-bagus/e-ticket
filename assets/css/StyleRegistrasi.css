@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color:#746e61;
+    background-color:#fff;
     background-size: cover;
 }
 
@@ -16,7 +16,7 @@ body {
     left: 50%;
     padding: 40px;
     transform: translate(-50%,-50%);
-    background: rgba(0, 0, 0, .5);
+    background: #04091e;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
     color:#fff;
     border-radius: 10px;
@@ -25,7 +25,7 @@ body {
 .form h1{
   float: left;
   font-size: 40px;
-  border-bottom: 6px solid #4caf50;
+  border-bottom: 6px solid #f3c300;
   margin-bottom: 50px;
   padding: 13px 0;
 }
@@ -37,7 +37,7 @@ body {
     width: 100%;
     overflow: hidden;
     font-size: 15px;
-    border-bottom: 1px solid #4caf50;
+    border-bottom: 1px solid #f3c300;
 }
 
 .form-control label {
@@ -55,8 +55,9 @@ body {
 	width: 80%;
     background: none;
     float: right;
-    color: #4caf50;
+    color: #f3c300;
 }
+
 
 .form-control input:focus {
 	outline: 0;
@@ -64,7 +65,7 @@ body {
 }
 
 .form-control.success input {
-	border-color: #2ecc71;
+	border-color: #f3c300;
 }
 
 .form-control.error input {
@@ -80,7 +81,7 @@ body {
 }
 
 .form-control.success i.fa-check-circle {
-	color: #2ecc71;
+	color: #f3c300;
 	visibility: visible;
 }
 
@@ -103,11 +104,15 @@ body {
 
 .form button {
     width: 100%;
-    background: none;
-    border: 2px solid #4caf50;
+    background: #f3c300;
+    border: 2px solid #f3c300;
     color: white;
     padding: 5px;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 300;
     cursor: pointer;
     margin: 12px 0;
+    line-height: 30px;
+    font-weight: 500;
 }
+

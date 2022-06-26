@@ -29,10 +29,10 @@
 			<i class="fas fa-exclamation-circle"></i>
 			<small>Error message</small>
 		</div>
-		<div class="form-control">
-			<label for="Nama">Gender:</label> <br/>
-			<input type="radio" name="gender" value="male" /> Male    
-			<input type="radio" name="gender" value="female" /> Female
+	<div class="form-control">
+			<label for="Gender">Gender:</label> <br/>
+			<input type="checkbox" name="Gender" value="male" onclick="selectOnlyThis(this)" class="checkmark"/> Male    
+			<input type="checkbox" name="Gender" value="female" onclick="selectOnlyThis(this)" class="checkmark"/> Female
 			<i class="fas fa-check-circle"></i>
 			<i class="fas fa-exclamation-circle"></i>
 			<small>Error message</small>
@@ -116,7 +116,10 @@ function checkInputs() {
   if (NikValue === "") {
 		setErrorFor(Nik, "Nik tidak boleh kosong!");
 		return false;
-	} else {
+	}else if (!isHp(NikValue)) {
+		setErrorFor(Nik, "NIK tidak Valid! harus berupa Angka 0-9");
+		return false;
+	}else {
 		setSuccessFor(Nik);
 	}
 
@@ -178,6 +181,12 @@ function setSuccessFor(input) {
 	formControl.className = "form-control success";
 }
 
+function isNik(Nik) {
+	return /[0-9]/.test(
+		Nik
+	);	
+}
+
 function isHp(Hp) {
 	return /[0-9]/.test(
 		Hp
@@ -188,6 +197,14 @@ function isEmail(email) {
 	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
 		email
 	);	
+}
+
+function selectOnlyThis(id){
+  var Gender = document.getElementsByName("Gender");
+  Array.prototype.forEach.call(Gender,function(el){
+    el.checked = false;
+  });
+  id.checked = true;
 }
 </script>
 </div>
