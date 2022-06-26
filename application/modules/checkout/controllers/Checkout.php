@@ -1,45 +1,62 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
 
 class Checkout extends MY_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
-
-    /**
-     * [__construct description]
-     *
-     * @method __construct
-     */
     public function __construct()
     {
-        // Load the constructer from MY_Controller
+		$this->load->model('Crud');
 		$this->load->model('GetData');
         parent::__construct();
     }
 
-    /**
-     * [index description]
-     *
-     * @method index
-     *
-     * @return [type] [description]
-     */
-	public function index()
+	public function index($hotelId)
 	{
-        $this->load->view('index');
+		$hotels = $this->db->query("SELECT 
+		h.id as HotelId, h.name as HotelName, h.is_active as Status, h.price_from as PriceFrom, h.price_to as PriceTo, h.check_in as CheckInTime, h.address as HotelAddress, h.admin_charge as AdminCharge, h.specification as Spec, d.path as Path, u.name as UnitName, u.value as UnitValue
+		FROM `hotels` h 
+		inner join `hotel_images` d 
+		on h.id = d.hotel_id
+        inner join `hotel_unit` u
+        on h.id = u.hotel_id
+		WHERE h.id = '".$hotelId."';")->result_array();
+
+		$params = array(
+			'hotel' 	=> $hotels,
+			'checkIn'	=> date_format(date_create(date("Y-m-d")),"l, F jS Y"),
+			'checkOut'	=> date_format(date_create(date("Y-m-d", time() + 86400)),"l, F jS Y"),
+			'buyerid' 	=> $this->session->userdata('buyerId'),
+			'email' 	=> $this->session->userdata('email'),
+			'phone' 	=> $this->session->userdata('phone')
+		);
+        $this->load->view('index', $params);
 	}
 
+	public function SubmitBooking() {
+		$hotelId = $this->input->post('HotelId');
+		$phone = $this->input->post('InputPhone');
+		$email = $this->input->post('InputEmail');
+		$addons = $this->input->post('InputAddOns');
+		$notes = $this->input->post('InputNotes');
+		$grandtotal = $this->input->post('InputGrand');
+		$stringAddOns = $addons ? join(",", $addons) : '';
+		$now = date("Y-m-d H:i:s");
+
+		$insertTransaction = $this->Crud->InsertData('transactions', array(
+			'buyer_id'		=> $this->session->userdata('buyerId'),
+			'hotel_id'		=> $hotelId,
+			'date'			=> $now,
+			'phone'			=> $phone,
+			'email'			=> $email,
+			'amount'		=> $grandtotal,
+			'addons'		=> $stringAddOns,
+			'description'	=> $notes,
+			'status'		=> "Booked"
+		));
+
+		if ($insertTransaction > 0) {
+			echo "Booking Berhasil! <a href='".base_url()."landing'>Ok</a>";
+		} else {
+			show_404();
+		}
+	}
 }
