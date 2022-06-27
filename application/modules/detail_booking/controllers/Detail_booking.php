@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Landing extends MY_Controller {
+class Detail_booking extends MY_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -27,7 +27,7 @@ class Landing extends MY_Controller {
     {
         // Load the constructer from MY_Controller
         parent::__construct();
-        $this->load->model('M_landing');
+        $this->load->model('M_Detail_booking');
     }
 
     /**
@@ -39,13 +39,8 @@ class Landing extends MY_Controller {
      */
 	public function index()
 	{
-        //
-        $data['hotel'] = $this->M_landing->GetHotel();
-        $this->load->view('index.php', $data);
+        $data['detail'] = $this->M_Detail_booking->detail_booking($id);
+        return $data;
+        $this->load->view('index', $data);
 	}
-
-    public function detail_booking($id){
-        $data['id'] = $id;
-        $this->load->view('detail_booking', $data);
-    }
 }
