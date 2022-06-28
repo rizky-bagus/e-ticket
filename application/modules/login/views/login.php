@@ -2,7 +2,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <link rel="icon" href="<?php echo base_url() ?>assets/icon/main-icon.png" type="image/png">
+    <title>AyoHotel</title>
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/styleLogin.css">
   </head>
   <body>
@@ -12,7 +13,7 @@
       <div class="textbox">
        <div class="input-area">
          <i class="fas fa-user"></i>
-         <input type="text" placeholder="Username" name="username" required>
+         <input type="text" placeholder="Email" name="username" required>
          <small>Error message</small>
         </div>
       </div>

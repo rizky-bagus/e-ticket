@@ -30,17 +30,16 @@ class Detail_booking extends MY_Controller {
         $this->load->model('M_Detail_booking');
     }
 
-    /**
-     * [index description]
-     *
-     * @method index
-     *
-     * @return [type] [description]
-     */
-	public function index()
+	public function index($id)
 	{
-        $data['detail'] = $this->M_Detail_booking->detail_booking($id);
-        return $data;
-        $this->load->view('index', $data);
+        // $data['detail'] = $this->M_Detail_booking->detail_booking($id);
+        // return $data;
+		$params = array(
+            // 'hotels'    => $hotels,
+			'buyerid' 	=> $this->session->userdata('buyerId'),
+			'email' 	=> $this->session->userdata('email'),
+			'phone' 	=> $this->session->userdata('phone')
+		);
+        $this->load->view('index', $params);
 	}
 }

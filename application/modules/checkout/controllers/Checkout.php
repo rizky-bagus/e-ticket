@@ -19,9 +19,11 @@ class Checkout extends MY_Controller {
         inner join `hotel_unit` u
         on h.id = u.hotel_id
 		WHERE h.id = '".$hotelId."';")->result_array();
+		$hotelUnits = $this->GetData->GetHotelUnits("WHERE hotel_id = '".$hotelId."';")->result_array();
 
 		$params = array(
 			'hotel' 	=> $hotels,
+			'units' 	=> $hotelUnits,
 			'checkIn'	=> date_format(date_create(date("Y-m-d")),"l, F jS Y"),
 			'checkOut'	=> date_format(date_create(date("Y-m-d", time() + 86400)),"l, F jS Y"),
 			'buyerid' 	=> $this->session->userdata('buyerId'),

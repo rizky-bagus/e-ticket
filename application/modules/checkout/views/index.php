@@ -14,8 +14,8 @@ if (isset($buyerid)) {
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="icon" href="<?php echo base_url() ?>assets/image/favicon.png" type="image/png">
-        <title>E-Ticket</title>
+        <link rel="icon" href="<?php echo base_url() ?>assets/icon/main-icon.png" type="image/png">
+        <title>AyoHotel</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootstrap.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/vendors/linericon/style.css">
@@ -34,24 +34,24 @@ if (isset($buyerid)) {
     <body>
         <!--================Header Area =================-->
         <header class="header_area">
-        <nav class="navbar navbar-expand-lg navbar-light">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand logo_h" href="<?php echo base_url() ?>landing"> E-Ticket</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav menu_nav ml-auto">
-                            <?php if (!$isLogin) { ?>
-                                <li class="nav-item" style="padding: 15px;"><a class="book_now_btn button_hover" href="<?php echo base_url() ?>login">Login</a></li>
-                            <?php } else { ?>
-                                <li class="nav-item" style="padding: 15px;"><a class="book_now_btn button_hover" href="<?php echo base_url() ?>login/logout">Logout</a></li>
-                            <?php }?>
-                        </ul>
-                    </div>
-                </nav>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a class="navbar-brand logo_h" href="<?php echo base_url() ?>landing"> <img src="<?php echo base_url() ?>assets/icon/main-icon.png" style="width: 50px;" alt=""> <label style="padding-top: 20px;">AyoHotel</label></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                        <?php if (!$isLogin) { ?>
+                            <li class="nav-item" style="padding: 15px;"><a class="book_now_btn button_hover" href="<?php echo base_url() ?>login">Login</a></li>
+                        <?php } else { ?>
+                            <li class="nav-item" style="padding: 15px;"><a class="book_now_btn button_hover" href="<?php echo base_url() ?>login/logout">Logout</a></li>
+                        <?php }?>
+                    </ul>
+                </div>
+            </nav>
         </header>
         <!--================Header Area =================-->
 
@@ -179,8 +179,8 @@ if (isset($buyerid)) {
                                 <div class="col-12">
                                     <label for="">Unit:</label>
                                     <ol style="list-style-type: circle; padding-left: 17px;">
-                                        <?php foreach ($hotel as $unit) { ?>
-                                            <li><label class="d-block"><?php echo $unit['UnitValue'].' '.$unit['UnitName'] ?></label></li>
+                                        <?php foreach ($units as $row) { ?>
+                                            <li><label class="d-block"><?php echo $row['value'].' '.$row['name'] ?></label></li>
                                         <?php } ?>
                                     </ol>
                                 </div>
@@ -239,7 +239,7 @@ if (isset($buyerid)) {
                     </div>
 
                     <div class="col-12 mt-4">
-                        <button type="button" class="btn btn-lg btn-success w-100" onclick="submitBook()">Book</button>
+                        <button type="button" class="btn btn-lg btn-warning w-100" onclick="submitBook()">Book</button>
                     </div>
                 </div>
             </div>

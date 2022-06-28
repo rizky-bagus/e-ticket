@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Form Validasi </title>
+    <link rel="icon" href="<?php echo base_url() ?>assets/icon/main-icon.png" type="image/png">
+    <title>AyoHotel</title>
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/css/StyleRegistrasi.css">
 </head>
 
@@ -31,8 +32,8 @@
 		</div>
 	<div class="form-control">
 			<label for="Gender">Gender:</label> <br/>
-			<input type="checkbox" name="Gender" value="male" onclick="selectOnlyThis(this)" class="checkmark"/> Male    
-			<input type="checkbox" name="Gender" value="female" onclick="selectOnlyThis(this)" class="checkmark"/> Female
+			<input type="checkbox" name="gender" value="male" onclick="selectOnlyThis(this)" class="checkmark"/> Male    
+			<input type="checkbox" name="gender" value="female" onclick="selectOnlyThis(this)" class="checkmark"/> Female
 			<i class="fas fa-check-circle"></i>
 			<i class="fas fa-exclamation-circle"></i>
 			<small>Error message</small>
@@ -200,7 +201,7 @@ function isEmail(email) {
 }
 
 function selectOnlyThis(id){
-  var Gender = document.getElementsByName("Gender");
+  var Gender = document.getElementsByName("gender");
   Array.prototype.forEach.call(Gender,function(el){
     el.checked = false;
   });
