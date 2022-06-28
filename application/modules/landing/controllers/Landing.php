@@ -1,51 +1,47 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Landing extends MY_Controller {
-
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
-
-    /**
-     * [__construct description]
-     *
-     * @method __construct
-     */
     public function __construct()
     {
         // Load the constructer from MY_Controller
-        parent::__construct();
         $this->load->model('M_landing');
+        $this->load->model('GetData');
+        parent::__construct();
     }
 
-    /**
-     * [index description]
-     *
-     * @method index
-     *
-     * @return [type] [description]
-     */
 	public function index()
 	{
-        //
-        $data['hotel'] = $this->M_landing->GetHotel();
-        $this->load->view('index.php', $data);
+        $hotels = $this->GetData->GetHotels()->result_array();
+		$params = array(
+            'hotels'    => $hotels,
+			'buyerid' 	=> $this->session->userdata('buyerId'),
+			'email' 	=> $this->session->userdata('email'),
+			'phone' 	=> $this->session->userdata('phone')
+		);
+        $this->load->view('index', $params);
 	}
 
-    public function detail_booking($id){
-        $data['id'] = $id;
-        $this->load->view('detail_booking', $data);
+    public function detail_hotel($id){
+        $selectedHotel = $this->GetData->GetHotels("WHERE id = '".$id."'")->row();
+        $otherHotels = $this->GetData->GetHotels("WHERE id <> '".$id."'")->result_array();
+		$hotels = $this->db->query("SELECT 
+                    i.id as ImageId, h.id as HotelId, i.path as ImagePath, h.name as HotelName, h.description as HotelDesc, h.price_to as PriceTo, h.specification as Facilities
+                    FROM `hotel_images` i 
+                    inner join `hotels`h
+                    on i.hotel_id = h.id
+                    WHERE h.id = '".$id."';")->result_array();
+
+        $testimoni = $this->GetData->GetTestimoni("WHERE hotel_id = '".$id."';")->result_array();
+
+		$params = array(
+            'otherHotels'       => $otherHotels,
+            'selectedHotel'     => $selectedHotel,
+            'testimoni'         => $testimoni,
+            'hotels'            => $hotels,
+			'buyerid' 	        => $this->session->userdata('buyerId'),
+			'email' 	        => $this->session->userdata('email'),
+			'phone' 	        => $this->session->userdata('phone')
+		);
+        $this->load->view('detail', $params);
     }
 }
